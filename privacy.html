@@ -183,7 +183,6 @@ footer a:hover { color: var(--ink); }
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <a class="nav-wordmark" href="index.html">BackChannel</a>
   <span class="nav-right">Privacy Policy</span>
@@ -191,21 +190,22 @@ footer a:hover { color: var(--ink); }
 
 <main>
   <div class="wrap">
-
     <div class="eyebrow">Legal</div>
     <h1 class="page-title">Privacy Policy</h1>
-    <p class="page-sub">Last updated: June 17, 2026</p>
+    <p class="page-sub">Last updated: September 22, 2026 · Effective: September 22, 2026</p>
 
     <nav class="toc" aria-label="Table of contents">
       <div class="toc-label">On this page</div>
       <ol>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#information-we-collect">Information we collect</a></li>
+        <li><a href="#what-we-dont-collect">What we don't collect</a></li>
         <li><a href="#service-providers">Third-party service providers</a></li>
         <li><a href="#how-we-use">How we use your information</a></li>
         <li><a href="#how-we-share">How your information is shared</a></li>
+        <li><a href="#safety">Reporting, blocking, and safety</a></li>
         <li><a href="#sensitive-information">Sensitive information</a></li>
-        <li><a href="#retention">Data retention</a></li>
+        <li><a href="#retention">Data retention and deletion</a></li>
         <li><a href="#your-rights">Your rights and choices</a></li>
         <li><a href="#security">Data security</a></li>
         <li><a href="#children">Children's privacy</a></li>
@@ -217,24 +217,24 @@ footer a:hover { color: var(--ink); }
 
     <section class="legal-section" id="overview">
       <h2>1. Overview</h2>
-      <p>BackChannel is a mobile app that connects job seekers ("Applicants") with employees at companies ("Sponsors") who are willing to refer candidates for open roles. Applicants build a profile and browse sponsored jobs; Sponsors review applicant profiles and decide whether to refer someone they're interested in. When both sides express interest, a match opens a chat, and a match can lead to a referral that we track through stages of a hiring pipeline.</p>
-      <p>This Privacy Policy describes what information we collect when you use BackChannel, why we collect it, who we share it with, and the choices and rights available to you — including how to delete your account and your data.</p>
+      <p>BackChannel is a mobile app, operated by Bluejay Labs LLC ("BackChannel," "we," "us," or "our"), that connects job seekers ("Applicants") with employees at companies ("Sponsors") who are willing to refer candidates for open roles. Applicants build a profile and browse sponsored jobs; Sponsors review Applicant profiles and decide whether to refer someone they're interested in. When both sides express interest, a match opens a chat, and a match can lead to a referral that we track through the stages of a hiring pipeline.</p>
+      <p>This Privacy Policy describes what information we collect when you use BackChannel, why we collect it, who we share it with, and the choices and rights available to you — including how to delete your account and your data. We've written it to describe what the app actually does today; if a future feature changes any of this, we'll update the policy first.</p>
     </section>
 
     <section class="legal-section" id="information-we-collect">
       <h2>2. Information we collect</h2>
 
       <h3>Information you provide</h3>
-      <p>When you create an account and build your profile, you provide us with information directly. This includes, for every user:</p>
+      <p>When you create an account and build your profile, you provide information directly. For every user, this includes:</p>
       <ul>
-        <li>Name, email address, password, and username</li>
-        <li>Phone number, including country code</li>
-        <li>Date of birth</li>
-        <li>Location or address, including street, city, state, zip or postal code, and country</li>
-        <li>A profile photo</li>
+        <li>Your name and email address, and a password if you sign up with email rather than with Apple or Google</li>
+        <li>Your city and state or region, which you can enter using an address-autocomplete field. We collect only the city and state — not a street address or postal code</li>
+        <li>A profile photo, if you add one</li>
         <li>A portfolio URL, if you add one</li>
         <li>A short bio</li>
       </ul>
+
+      <p>If you sign in with <strong>Apple</strong> or <strong>Google</strong>, we receive your name and email address from that provider. If you use Apple's "Hide My Email" option, we receive Apple's private relay address instead of your real email, and that relay address becomes your account email.</p>
 
       <p>If you use BackChannel as an <strong>Applicant</strong>, we also collect:</p>
       <ul>
@@ -244,16 +244,17 @@ footer a:hover { color: var(--ink); }
         <li>Professional experience — job titles, companies, employment dates, and descriptions</li>
         <li>Education, certifications, and languages</li>
         <li>Short answers to prompts ("insights") that help Sponsors get a sense of who you are</li>
-        <li>Your uploaded resume file, the text we extract from it, and fields our systems classify from that text (for example, skills, job titles, or dates) so your profile is easier to search and match against open roles</li>
+        <li>Your uploaded resume file, the text we extract from it, and the fields our systems classify from that text (for example, skills, job titles, or dates) so your profile is easier to search and match against open roles</li>
       </ul>
 
       <p>If you use BackChannel as a <strong>Sponsor</strong>, we also collect:</p>
       <ul>
         <li>Your company and job title</li>
-        <li>Your work email address, which we use to verify that you control an email account at the company you say you work for</li>
+        <li>Your work email address, which we use to verify that you control an email account at the company you say you work for. Verifying it is optional, but some Sponsor features require it</li>
         <li>Your tenure at the company</li>
         <li>Your referral preferences and the companies you're able to refer candidates into</li>
         <li>Short answers to "insights" prompts</li>
+        <li>Job postings you create or sponsor — the title, description, and any "insider insights" you write. If you import a posting from a URL, we also collect that URL and the content of the page it points to</li>
       </ul>
 
       <h3>Information from your activity</h3>
@@ -262,47 +263,54 @@ footer a:hover { color: var(--ink); }
         <li>Jobs you like or pass on, and profiles you like</li>
         <li>Matches you form with other users</li>
         <li>Messages you send and receive in the app</li>
-        <li>Referrals you make or receive, and status updates as a referral moves through a hiring pipeline</li>
+        <li>Referrals you make or receive, the "vouch" statement a Sponsor writes when submitting one, and status updates as a referral moves through a hiring pipeline</li>
         <li>Entries you submit to a waitlist, if you join one</li>
+        <li>Reports you submit about another user — the person reported, the reason you select, and any details you add — and the blocks that result (see Section 7)</li>
       </ul>
 
       <h3>Information collected automatically</h3>
       <p>We also collect certain information automatically when you use the app:</p>
       <ul>
-        <li>A push-notification device token and platform, so we can deliver notifications to your device</li>
-        <li>Product-analytics events, such as which screens you view and which actions you take</li>
-        <li>Crash and diagnostic data when something in the app doesn't work as expected</li>
+        <li>A push-notification device token and platform, so we can deliver notifications to your device. You control which notifications you receive in the app's Notification settings</li>
+        <li>Product-analytics events, such as which screens you view and which actions you take, and a device identifier that lets our analytics tool recognize the same device across sessions. Your analytics profile is also associated with your account details — name, email, company, job title, city, role, and whether your email is verified — so we can understand how different kinds of users experience the app. Analytics events do not include the contents of your messages, resume, or search terms</li>
+        <li>Crash and diagnostic data when something in the app doesn't work as expected. This is associated with your account ID so we can follow up on a problem you hit. It does not include screenshots of your screen or the contents of your messages</li>
         <li>Standard device and technical information, such as device model, operating system version, and app version</li>
       </ul>
     </section>
 
+    <section class="legal-section" id="what-we-dont-collect">
+      <h2>3. What we don't collect</h2>
+      <p>To be clear about the limits: BackChannel does not ask for or collect your phone number, date of birth, street address, or postal code. The app does not access your device's precise location (GPS), your contacts, your photo library beyond the specific photo or file you choose to upload, or your microphone. We do not use advertising identifiers and we do not track you across other companies' apps or websites.</p>
+    </section>
+
     <section class="legal-section" id="service-providers">
-      <h2>3. Third-party service providers</h2>
-      <p>We work with a small number of service providers to operate BackChannel. Each one only receives the information it needs to perform its specific function, and none of them are permitted to use your information for their own independent purposes, such as advertising. We do not sell your personal information.</p>
+      <h2>4. Third-party service providers</h2>
+      <p>We work with a small number of service providers to operate BackChannel. Each one receives only the information it needs to perform its specific function, and none of them are permitted to use your information for their own independent purposes, such as advertising. We do not sell your personal information.</p>
 
       <table class="providers">
         <thead>
           <tr><th>Provider</th><th>What it does</th></tr>
         </thead>
         <tbody>
-          <tr><td>Anthropic (Claude)</td><td>Processes the text of resumes and job postings using AI, to parse and classify fields and extract structured details that power matching and search.</td></tr>
-          <tr><td>Mixpanel</td><td>Product analytics — helps us understand how the app is used so we can improve it.</td></tr>
+          <tr><td>Anthropic (Claude)</td><td>Processes your uploaded resume — the file itself and the text extracted from it — and the text of job postings imported from a URL, using AI to parse and classify fields and extract structured details that power your profile, matching, and search. Anthropic is the only AI provider we use.</td></tr>
+          <tr><td>Apple</td><td>Sign in with Apple, if you choose it; distribution of the app through the App Store and TestFlight; and processing of any future in-app purchases.</td></tr>
+          <tr><td>Google</td><td>Sign in with Google, if you choose it. Separately, the Google Places API powers the city-autocomplete field when you enter your location; it receives only what you type in that field.</td></tr>
+          <tr><td>Mixpanel</td><td>Product analytics — helps us understand how the app is used so we can improve it. See Section 2 for what analytics data includes.</td></tr>
           <tr><td>Sentry</td><td>Crash and error reporting, so we know when something breaks and can fix it.</td></tr>
-          <tr><td>Google Places API</td><td>Powers address autocomplete when you enter your location.</td></tr>
-          <tr><td>DigitalOcean</td><td>Cloud hosting for our servers and database infrastructure.</td></tr>
-          <tr><td>DigitalOcean Spaces</td><td>Cloud storage and content delivery for files you upload, such as your profile photo and resume.</td></tr>
-          <tr><td>Snowflake</td><td>Our data warehouse, used to store and analyze data at scale.</td></tr>
-          <tr><td>Resend</td><td>Sends transactional emails, such as email verification and password reset messages.</td></tr>
-          <tr><td>Expo Push Service</td><td>Delivers push notifications to your device.</td></tr>
-          <tr><td>Logo.dev</td><td>Looks up company logos by company name. We only send this provider company names, never personal information about you.</td></tr>
-          <tr><td>RevenueCat</td><td>Manages subscriptions and in-app purchases. We don't currently offer paid features; if and when we do, RevenueCat will handle subscription management.</td></tr>
-          <tr><td>Apple</td><td>Distributes the app through the App Store and TestFlight, and would process any future in-app purchases.</td></tr>
+          <tr><td>DigitalOcean</td><td>Cloud hosting for our application servers, and file storage and content delivery (DigitalOcean Spaces) for files you upload. Profile photos are served from a content-delivery network, so anyone with the exact link to a photo can view it; resume files are stored privately and are only served to people the app is showing them to. See Section 6.</td></tr>
+          <tr><td>Snowflake</td><td>Hosts our primary database (a managed PostgreSQL service), where your account, profile, and activity data are stored.</td></tr>
+          <tr><td>Resend</td><td>Sends transactional emails on our behalf, such as email verification, password reset, and work-email verification messages.</td></tr>
+          <tr><td>Expo</td><td>Delivers push notifications to your device through Expo's push service.</td></tr>
+          <tr><td>Logo.dev</td><td>Looks up company logos by company name. We send this provider company names only, never personal information about you.</td></tr>
+          <tr><td>RevenueCat</td><td>Would manage subscriptions and in-app purchases. We don't currently offer paid features, so RevenueCat does not receive any of your data today; if we introduce paid features, we'll update this policy first.</td></tr>
         </tbody>
       </table>
+
+      <p>Job listings shown in the app are sourced from public company career pages and third-party job-data providers. We receive listings from those sources; we do not send them your personal information.</p>
     </section>
 
     <section class="legal-section" id="how-we-use">
-      <h2>4. How we use your information</h2>
+      <h2>5. How we use your information</h2>
       <p>We use the information described above to:</p>
       <ul>
         <li>Operate the app — create and maintain your account, build your profile, and let you browse jobs or applicants</li>
@@ -310,85 +318,97 @@ footer a:hover { color: var(--ink); }
         <li>Facilitate referrals and track them through the hiring pipeline</li>
         <li>Enable messaging between users who've matched</li>
         <li>Process resumes and job postings with AI so profiles and listings are accurate and searchable</li>
-        <li>Send you notifications, such as a new match, a new message, or a referral status update</li>
+        <li>Send you notifications, such as a new match, a new message, a referral status update, or a reminder that a fresh set of profiles or roles is ready — each of which you can turn off in the app's Notification settings</li>
         <li>Analyze how the app is used so we can fix problems and build better features</li>
-        <li>Detect, investigate, and prevent fraud, abuse, and security incidents</li>
-        <li>Comply with legal obligations and enforce our Terms of Service</li>
+        <li>Review reports, enforce our Terms of Service, and detect, investigate, and prevent fraud, abuse, and security incidents</li>
+        <li>Comply with legal obligations</li>
       </ul>
     </section>
 
     <section class="legal-section" id="how-we-share">
-      <h2>5. How your information is shared</h2>
+      <h2>6. How your information is shared</h2>
       <p>Sharing information with other users is a core part of how BackChannel works, not a side effect. Specifically:</p>
       <ul>
-        <li>When you and another user express mutual interest and form a match, the Sponsor in that match can see the Applicant's profile and the resume they've uploaded, and the Applicant can see the profile information the Sponsor has chosen to share.</li>
+        <li>If you're an <strong>Applicant</strong>, Sponsors at companies with open roles can see your profile — your name, photo, city, bio, skills, experience, education, and "insights" answers — when deciding whether to express interest in you. Your resume file is shared with a Sponsor once you and that Sponsor have matched, because reviewing it is the point of a referral introduction.</li>
+        <li>If you're a <strong>Sponsor</strong>, Applicants can see the information you've chosen to share on your profile — your name, photo, job title, company, tenure, and "insights" answers — alongside the roles you sponsor. Your work email address and your login email are never shown to other users.</li>
         <li>Messages you send within a match are visible to the other person in that match.</li>
         <li>Referral and pipeline status you or the other party update is visible to both people involved in that referral.</li>
+        <li>Profile photos are served from a content-delivery network; the links aren't published anywhere, but anyone who has a photo's exact link can view it.</li>
       </ul>
-      <p>Beyond sharing between matched users, we share information:</p>
+
+      <p>Beyond sharing between users, we share information:</p>
       <ul>
-        <li>With the service providers described in Section 3, only to the extent needed for them to perform their function</li>
+        <li>With the service providers described in Section 4, only to the extent needed for them to perform their function</li>
         <li>If required by law, legal process, or government request, or where we believe it's necessary to protect the rights, safety, or property of BackChannel, our users, or the public</li>
         <li>In connection with a merger, acquisition, financing, or sale of company assets, in which case your information would remain subject to a policy that protects it</li>
       </ul>
+
       <p>We do not sell your personal information to third parties.</p>
     </section>
 
+    <section class="legal-section" id="safety">
+      <h2>7. Reporting, blocking, and safety</h2>
+      <p>You can report another user from their profile, from a job posting, or from a conversation. When you report someone, we record who you reported, the reason you selected, and any details you added, and a member of our team reviews it. Reporting also <strong>blocks</strong> the other person immediately: you will no longer be shown to each other anywhere in the app, any match or conversation between you is closed, and any pending referral between you is withdrawn. Blocks are permanent and can't be undone from within the app.</p>
+      <p>We keep report records for as long as they're needed to review the report, enforce our Terms, and keep the platform safe, including after either account is deleted where necessary to prevent abuse. The person you report is not told who reported them.</p>
+    </section>
+
     <section class="legal-section" id="sensitive-information">
-      <h2>6. Sensitive information</h2>
-      <p>Some of what you share with us is sensitive: your resume (which can reveal a great deal about your work history and background), your date of birth, and your address or location. We collect this information because it's necessary for core features of the app — matching you to relevant roles, confirming you meet our minimum age requirement, and enabling location-aware search — and we limit how it's shared to the uses described in this policy, such as showing your resume to a Sponsor you've matched with because that's the purpose of a referral introduction. We do not use sensitive information to make fully automated decisions that have a significant effect on you without a person involved.</p>
+      <h2>8. Sensitive information</h2>
+      <p>Some of what you share with us is sensitive — most of all your resume and work history, which can reveal a great deal about your background, and your work-authorization and visa status if you provide them. We collect this information because it's necessary for the core features of the app: matching you to relevant roles and giving a Sponsor what they need to decide whether to refer you. We limit how it's shared to the uses described in this policy — for example, showing your resume to a Sponsor you've matched with, because that's the purpose of a referral introduction.</p>
+      <p>Our matching and feed ordering are algorithmic, but we do not use your information to make fully automated decisions that have a legal or similarly significant effect on you. Whether you receive a referral, an interview, or an offer is decided by people — Sponsors and employers — not by BackChannel.</p>
     </section>
 
     <section class="legal-section" id="retention">
-      <h2>7. Data retention</h2>
-      <p>We keep your information for as long as your account is active, so the app continues to work as you'd expect — including your match history, past messages, and referral status. When you delete your account, we delete or anonymize your information so it can no longer identify you, except where we're required to retain certain records for legal, tax, security, or fraud-prevention purposes, and even then only for as long as necessary. Aggregated or de-identified data that can no longer reasonably be linked to you may be retained without a fixed time limit.</p>
+      <h2>9. Data retention and deletion</h2>
+      <p>We keep your information for as long as your account is active, so the app continues to work as you'd expect — including your match history, past messages, and referral status.</p>
+      <p>When you delete your account, we permanently delete your account record, profile, resume and extracted resume text, photos, likes, matches, conversations and messages, referrals, waitlist entries, and device tokens from our systems; remove your uploaded files from storage; and, if you signed in with Apple, revoke the sign-in authorization with Apple. Deletion is immediate and can't be undone. Residual copies in routine system backups are overwritten in the ordinary course of operations. We may retain limited records where we're required to for legal, tax, security, or fraud-prevention purposes — for example, a report you submitted or that was submitted about you — and even then only for as long as necessary.</p>
+      <p>Aggregated or de-identified data that can no longer reasonably be linked to you may be retained without a fixed time limit.</p>
     </section>
 
     <section class="legal-section" id="your-rights">
-      <h2>8. Your rights and choices</h2>
-      <p><strong>Access.</strong> Most of the information we hold about you is visible directly in the app, on your profile.</p>
+      <h2>10. Your rights and choices</h2>
+      <p><strong>Access.</strong> Most of the information we hold about you is visible directly in the app, on your profile. If you'd like a copy of the information we hold about you, email us at the address in Section 15 and we'll provide it.</p>
       <p><strong>Correct.</strong> You can update or correct your profile information at any time using the profile editing screens in the app.</p>
-
-      <div class="callout">
-        <div class="callout-label">Deleting your account</div>
-        <p>You can permanently delete your account at any time using the in-app <strong>Delete Account</strong> option in Settings. Once you confirm, we begin deleting or anonymizing your account data — including your profile, resume, photos, and messages — subject to the limited retention described in Section 7 above (for example, where we're required to keep certain records for legal, tax, security, or fraud-prevention reasons).</p>
-        <p>Account deletion can't be undone. Once it's processed, we can't recover your account or restore your data. If you'd rather not delete your account but want to ask us about the information we hold on you, email us at <a href="mailto:[Contact email]">[Contact email]</a>.</p>
-      </div>
+      <p><strong>Notifications.</strong> You can turn individual notification types on or off in the app's Notification settings, and you can disable notifications entirely in your device's system settings.</p>
+      <p><strong>Delete.</strong> You can permanently delete your account at any time from Profile → Privacy &amp; Security → Delete Account. If you signed up with Apple or Google and haven't set a password, the app will first email you a link to set one, since deletion requires confirming your identity. Once you confirm, deletion happens as described in Section 9.</p>
+      <p>Depending on where you live, you may have additional rights under local law — for example, to object to or restrict certain processing, or to receive your data in a portable format. To exercise any of these rights, contact us using the details in Section 15. We won't discriminate against you for exercising them.</p>
     </section>
 
     <section class="legal-section" id="security">
-      <h2>9. Data security</h2>
-      <p>We use measures designed to protect your information, including encrypting data in transit, restricting internal access to what's needed to operate the service, and storing passwords in hashed form so they're never kept as plain text. No method of transmission or storage is completely secure, and we can't guarantee absolute security. We encourage you to use a strong, unique password for your account and to contact us promptly if you believe your account has been compromised.</p>
+      <h2>11. Data security</h2>
+      <p>We use measures designed to protect your information, including encrypting data in transit, storing passwords only in hashed form so they are never kept as plain text, storing resume files privately so they're only served to people the app is showing them to, and restricting internal access to what's needed to operate the service. No method of transmission or storage is completely secure, and we can't guarantee absolute security. We encourage you to use a strong, unique password for your account and to contact us promptly if you believe your account has been compromised.</p>
     </section>
 
     <section class="legal-section" id="children">
-      <h2>10. Children's privacy</h2>
-      <p>BackChannel is not directed to children, and we do not knowingly collect personal information from anyone under the age of 16. The Service is intended for people who are at least 16 years old and legally able to seek employment or refer candidates. If we learn that someone under the applicable minimum age has created an account, we will take steps to delete that account and the associated information.</p>
+      <h2>12. Children's privacy</h2>
+      <p>BackChannel is not directed to children. The Service is intended for people who are at least 16 years old and legally able to seek employment or refer candidates, and by creating an account you represent that you meet that requirement. We do not knowingly collect personal information from anyone under 16. If we learn that someone under 16 has created an account, we will delete that account and the associated information.</p>
     </section>
 
     <section class="legal-section" id="international">
-      <h2>11. International data transfers</h2>
-      <p>Our infrastructure and service providers are primarily located in the United States. If you access BackChannel from outside the United States, your information will be transferred to, stored, and processed in the United States and potentially other countries, where data protection laws may differ from those in your home country. By using BackChannel, you understand that your information may be transferred to and processed in these locations.</p>
+      <h2>13. International data transfers</h2>
+      <p>Our infrastructure and service providers are located primarily in the United States. If you access BackChannel from outside the United States, your information will be transferred to, stored, and processed in the United States and potentially other countries, where data protection laws may differ from those in your home country. By using BackChannel, you understand that your information may be transferred to and processed in these locations.</p>
     </section>
 
     <section class="legal-section" id="changes">
-      <h2>12. Changes to this policy</h2>
-      <p>We may update this Privacy Policy as BackChannel evolves. When we do, we'll update the "Last updated" date at the top of this page, and if a change is material, we'll provide additional notice — for example, through an in-app notification.</p>
+      <h2>14. Changes to this policy</h2>
+      <p>We may update this Privacy Policy as BackChannel evolves. When we do, we'll update the "Last updated" date at the top of this page, and if a change is material, we'll provide additional notice — for example, through an in-app notification — before it takes effect.</p>
     </section>
 
     <section class="legal-section" id="contact">
-      <h2>13. Contact us</h2>
-      <p>If you have questions about this Privacy Policy or how we handle your information, contact us at <a href="mailto:[Contact email]">[Contact email]</a>.</p>
-      <p>[Legal entity name]<br>[Company mailing address]<br>Effective date: [Effective date]</p>
+      <h2>15. Contact us</h2>
+      <p>If you have questions about this Privacy Policy or how we handle your information, or want to exercise any of the rights described above, contact us at <a href="mailto:support@backchannel.app">support@backchannel.app</a>.</p>
+      <p>Bluejay Labs LLC<br>
+      5900 Balcones Drive, Ste 100<br>
+      Austin, TX 78731<br>
+      United States</p>
     </section>
 
   </div>
 </main>
 
 <footer>
-  <span>© 2026 BackChannel. All rights reserved.</span>
-  <span class="footer-links"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="mailto:[Contact email]">Contact</a></span>
+  <span>© 2026 Bluejay Labs LLC. All rights reserved.</span>
+  <span class="footer-links"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="mailto:support@backchannel.app">Contact</a></span>
 </footer>
-
 </body>
 </html>
