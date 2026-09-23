@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BackChannel — Sponsor Testing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0a0a0a; --paper: #ffffff; --off-white: #fafaf8; --surface: #f5f5f2;
+  --border: #e8e8e4; --border-strong: #d0d0ca; --body: #4a4a44;
+  --muted: #888880; --faint: #b8b8b0;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'DM Serif Display', 'Times New Roman', serif;
+}
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+.nav-left { display: flex; align-items: center; gap: 16px; }
+.nav-back { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.15s; }
+.nav-back:hover { color: var(--ink); }
+.nav-sep { width: 1px; height: 16px; background: var(--border); }
+.nav-wordmark { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 14px; }
+.nav-pct { font-size: 12px; font-weight: 500; color: var(--muted); min-width: 32px; text-align: right; }
+.nav-bar { width: 80px; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.nav-fill { height: 100%; background: var(--ink); border-radius: 99px; width: 0%; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+.hero { max-width: 660px; margin: 0 auto; padding: 72px 40px 48px; border-bottom: 1px solid var(--border); }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.eyebrow-tag { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); }
+.hero-title { font-family: var(--serif); font-size: clamp(36px,7vw,52px); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+.hero-title em { font-style: italic; color: var(--muted); }
+.hero-body { font-size: 16px; font-weight: 300; line-height: 1.65; color: var(--body); max-width: 480px; margin-bottom: 32px; }
+.setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
+.setup-cell { background: var(--off-white); padding: 14px 18px; }
+.setup-cell.full { grid-column: 1/-1; }
+.setup-key { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+.setup-val { font-size: 13px; font-weight: 500; color: var(--ink); }
+.setup-val.ph { color: var(--faint); font-style: italic; }
+.setup-val input { background: transparent; border: none; outline: none; font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink); width: 100%; padding: 0; }
+.setup-val input::placeholder { color: var(--faint); font-style: italic; }
+.pill { font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 99px; border: 1px solid transparent; }
+.p-block { background:#fef2f2; color:#b91c1c; border-color:#fecaca; }
+.p-major { background:#fffbeb; color:#92400e; border-color:#fde68a; }
+.p-minor { background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; }
+.p-cosm  { background:#f0fdf4; color:#15803d; border-color:#bbf7d0; }
+.main { max-width: 660px; margin: 0 auto; padding: 0 40px; }
+.section { border-bottom: 1px solid var(--border); }
+.sec-header { display: flex; align-items: flex-start; gap: 18px; padding: 28px 0; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+.sec-num { font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--faint); font-style: italic; padding-top: 3px; flex-shrink: 0; width: 24px; }
+.sec-info { flex: 1; min-width: 0; }
+.sec-title { font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 4px; }
+.sec-meta { font-size: 12px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.sec-bar { width: 64px; height: 2px; background: var(--border); border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+.sec-fill { height: 100%; background: var(--ink); border-radius: 99px; width: 0%; transition: width 0.3s; }
+.chevron { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-top: 3px; transition: background 0.2s, border-color 0.2s; background: var(--paper); }
+.chevron svg { width: 12px; height: 12px; stroke: var(--muted); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), stroke 0.2s; }
+.section.open .chevron { background: var(--ink); border-color: var(--ink); }
+.section.open .chevron svg { stroke: white; transform: rotate(180deg); }
+.sec-body { display: none; padding-bottom: 12px; }
+.section.open .sec-body { display: block; }
+.sec-goal { font-size: 13px; font-weight: 400; color: var(--muted); line-height: 1.6; padding-bottom: 16px; border-bottom: 1px solid var(--surface); margin-bottom: 4px; }
+.sec-prelude { font-size: 12px; font-weight: 400; color: var(--faint); font-style: italic; margin-top: 6px; }
+.item { padding: 20px 0 20px 32px; position: relative; border-bottom: 1px solid var(--surface); transition: opacity 0.2s; }
+.item:last-child { border-bottom: none; }
+.item.checked { opacity: 0.45; }
+.ichk { position: absolute; left: 0; top: 22px; width: 20px; height: 20px; border: 1.5px solid var(--border-strong); border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.18s; background: var(--paper); -webkit-tap-highlight-color: transparent; flex-shrink: 0; }
+.ichk.checked { background: var(--ink); border-color: var(--ink); }
+.ichk.checked::after { content: ''; width: 10px; height: 7px; border-left: 2px solid white; border-bottom: 2px solid white; transform: rotate(-45deg) translateY(-1px); display: block; }
+.item-step { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 5px; cursor: pointer; }
+.item-action { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.5; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+.item.checked .item-action { color: var(--muted); }
+.look-for { font-size: 13px; font-weight: 400; color: var(--muted); line-height: 1.55; margin: 8px 0 12px; padding-left: 14px; border-left: 2px solid var(--border); font-style: italic; }
+.look-for strong { font-weight: 600; font-style: normal; color: var(--body); }
+.item-controls { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; margin-bottom: 10px; }
+.sbtn { font-size: 10px; font-weight: 600; padding: 4px 12px; border-radius: 99px; cursor: pointer; font-family: var(--sans); letter-spacing: 0.02em; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.sbtn:active { transform: scale(0.96); }
+.sbtn[data-st="ok"]    { background:#f0fdf4; color:#16a34a; border: 1px solid #bbf7d0; }
+.sbtn[data-st="warn"]  { background:#fffbeb; color:#b45309; border: 1px solid #fde68a; }
+.sbtn[data-st="block"] { background:#fef2f2; color:#dc2626; border: 1px solid #fecaca; }
+.sbtn.ok   { background:#dcfce7; color:#15803d; border: 1.5px solid #86efac; font-weight:700; box-shadow: 0 0 0 3px rgba(21,128,61,0.1); }
+.sbtn.warn { background:#fef3c7; color:#92400e; border: 1.5px solid #fcd34d; font-weight:700; box-shadow: 0 0 0 3px rgba(146,64,14,0.1); }
+.sbtn.blk  { background:#fee2e2; color:#b91c1c; border: 1.5px solid #fca5a5; font-weight:700; box-shadow: 0 0 0 3px rgba(185,28,28,0.1); }
+.item-notes { width: 100%; background: var(--off-white); border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-family: var(--sans); font-size: 13px; font-weight: 400; color: var(--ink); resize: none; min-height: 34px; line-height: 1.5; overflow: hidden; transition: border-color 0.15s, min-height 0.15s; }
+.item-notes::placeholder { color: var(--faint); }
+.item-notes:focus { outline: none; border-color: var(--border-strong); min-height: 60px; }
+.final { max-width: 660px; margin: 0 auto; padding: 56px 40px 80px; }
+.final-title { font-family: var(--serif); font-size: clamp(28px,5vw,40px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin: 16px 0 10px; }
+.final-title em { font-style: italic; color: var(--muted); }
+.final-sub { font-size: 15px; font-weight: 300; color: var(--body); line-height: 1.6; margin-bottom: 36px; max-width: 400px; }
+.rating-row { display: flex; gap: 8px; align-items: center; margin-bottom: 32px; }
+.star { font-size: 26px; cursor: pointer; color: var(--border); transition: color 0.15s, transform 0.1s; line-height: 1; user-select: none; -webkit-tap-highlight-color: transparent; }
+.star.lit { color: var(--ink); }
+.star:active { transform: scale(0.88); }
+.star-cap { font-size: 12px; font-weight: 500; color: var(--faint); margin-left: 6px; }
+.star-cap.on { color: var(--muted); }
+.q-block { margin-bottom: 22px; }
+.q-label { display: block; font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em; }
+.q-ta { width: 100%; background: var(--off-white); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--ink); resize: none; min-height: 88px; line-height: 1.6; transition: border-color 0.15s; }
+.q-ta::placeholder { color: var(--faint); }
+.q-ta:focus { outline: none; border-color: var(--border-strong); }
+.viability-block { margin: 8px 0 28px; padding: 20px; background: var(--off-white); border: 1px solid var(--border); border-radius: 14px; }
+.viability-heading { font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 16px; }
+.viability-q { margin-bottom: 18px; }
+.viability-q:last-child { margin-bottom: 0; }
+.viability-q-label { font-size: 13px; font-weight: 500; color: var(--body); margin-bottom: 10px; line-height: 1.45; }
+.viability-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.viability-opt { font-size: 12px; font-weight: 500; padding: 8px 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--paper); color: var(--body); cursor: pointer; font-family: var(--sans); transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.viability-opt:hover { border-color: var(--border-strong); }
+.viability-opt.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.viability-yn { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.viability-yn-label { font-size: 13px; font-weight: 500; color: var(--body); line-height: 1.45; flex: 1; }
+.viability-yn-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.viability-yn-btn { font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 99px; border: 1px solid var(--border); background: var(--paper); color: var(--body); cursor: pointer; font-family: var(--sans); transition: all 0.15s; -webkit-tap-highlight-color: transparent; min-width: 52px; }
+.viability-yn-btn:hover { border-color: var(--border-strong); }
+.viability-yn-btn.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.export-btn { display: block; width: 100%; margin-top: 28px; padding: 16px 24px; background: var(--ink); color: var(--paper); font-family: var(--sans); font-size: 15px; font-weight: 500; border: none; border-radius: 12px; cursor: pointer; letter-spacing: -0.01em; transition: opacity 0.15s, transform 0.1s; text-align: center; }
+.export-btn:active { transform: scale(0.99); opacity: 0.85; }
+.footer-note { margin-top: 14px; font-size: 12px; color: var(--faint); text-align: center; }
+.submit-btn { display: block; width: 100%; margin-top: 28px; padding: 16px 24px; background: var(--ink); color: var(--paper); font-family: var(--sans); font-size: 15px; font-weight: 500; border: none; border-radius: 12px; cursor: pointer; letter-spacing: -0.01em; transition: opacity 0.2s, transform 0.1s; text-align: center; }
+.submit-btn:active { transform: scale(0.99); opacity: 0.85; }
+.submit-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.thankyou-screen { display:none; position:fixed; inset:0; z-index:200; background:var(--paper); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; opacity:0; transition:opacity 0.5s ease; }
+.thankyou-screen.visible { display:flex; }
+.thankyou-screen.shown { opacity:1; }
+.ty-check { width:56px; height:56px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:32px; opacity:0; transform:scale(0.8); transition:opacity 0.4s 0.2s ease, transform 0.4s 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+.ty-check.in { opacity:1; transform:scale(1); }
+.ty-check svg { width:22px; height:22px; stroke:var(--ink); stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.ty-eyebrow { font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; opacity:0; transform:translateY(12px); transition:opacity 0.4s 0.35s ease, transform 0.4s 0.35s ease; }
+.ty-eyebrow.in { opacity:1; transform:translateY(0); }
+.ty-title { font-family:var(--serif); font-size:clamp(32px,6vw,48px); font-weight:400; line-height:1.08; letter-spacing:-0.02em; color:var(--ink); margin-bottom:20px; opacity:0; transform:translateY(14px); transition:opacity 0.45s 0.45s ease, transform 0.45s 0.45s ease; }
+.ty-title.in { opacity:1; transform:translateY(0); }
+.ty-title em { font-style:italic; color:var(--muted); }
+.ty-body { font-size:16px; font-weight:300; line-height:1.7; color:var(--body); max-width:420px; margin-bottom:16px; opacity:0; transform:translateY(12px); transition:opacity 0.4s 0.55s ease, transform 0.4s 0.55s ease; }
+.ty-body.in { opacity:1; transform:translateY(0); }
+.ty-divider { width:40px; height:1px; background:var(--border); margin:24px auto; opacity:0; transition:opacity 0.4s 0.62s ease; }
+.ty-divider.in { opacity:1; }
+.ty-launch { font-size:13px; font-weight:500; color:var(--faint); letter-spacing:0.02em; opacity:0; transform:translateY(10px); transition:opacity 0.4s 0.68s ease, transform 0.4s 0.68s ease; }
+.ty-launch.in { opacity:1; transform:translateY(0); }
+@media (max-width: 600px) {
+  .nav { padding: 0 20px; } .nav-bar { width: 50px; }
+  .hero, .main, .final { padding-left: 20px; padding-right: 20px; }
+  .hero { padding-top: 48px; }
+  .setup-grid { grid-template-columns: 1fr; } .setup-cell.full { grid-column: 1; }
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes fadeOutCursor { to { opacity:0; } }
+.nav { animation: fadeDown 0.4s 0.05s ease both; opacity:0; }
+.hero { animation: fadeUp 0.5s 0.2s ease both; opacity:0; }
+.main { animation: fadeUp 0.5s 0.35s ease both; opacity:0; }
+.final { animation: fadeUp 0.5s 0.4s ease both; opacity:0; }
+.hero-title em { position: relative; }
+.tw-cursor { display:inline-block; width:2px; height:0.8em; background:var(--muted); margin-left:1px; vertical-align:middle; border-radius:1px; opacity:0; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:0.01ms !important; animation-delay:0.01ms !important; } }
+
+/* Back to home button on thank you screen */
+.ty-back { display:inline-block; margin-top:28px; padding:13px 28px; border:1px solid var(--border); border-radius:12px; font-family:var(--sans); font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; letter-spacing:-0.01em; transition:border-color 0.2s, color 0.2s; opacity:0; transform:translateY(10px); transition:opacity 0.4s 0.78s ease, transform 0.4s 0.78s ease, border-color 0.2s, color 0.2s; }
+.ty-back.in { opacity:1; transform:translateY(0); }
+.ty-back:hover { border-color:var(--border-strong); color:var(--ink); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-back" href="index.html">← Back</a>
+    <div class="nav-sep"></div>
+    <a class="nav-wordmark" href="index.html">BackChannel</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-pct" id="nav-pct">0%</span>
+    <div class="nav-bar"><div class="nav-fill" id="nav-fill"></div></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <p class="eyebrow">Sponsor Beta <span class="eyebrow-tag">Testing Guide</span></p>
+  <h1 class="hero-title">Explore the app.<br><em id="tw-target"></em><span class="tw-cursor" id="tw-cursor"></span></h1>
+  <p class="hero-body">Thanks for being part of the beta. Think of this as a coverage map, not a script — it tells you what to explore, you drive how. Your instincts are the point.</p>
+  <div class="setup-grid">
+    <div class="setup-cell"><div class="setup-key">Install</div><div class="setup-val ph"><a href="https://testflight.apple.com/join/y3TS3wtU" style="color:var(--ink);text-decoration:underline;text-underline-offset:2px;">https://testflight.apple.com/join/y3TS3wtU</a></div></div>
+    <div class="setup-cell"><div class="setup-key">Beta round</div><div class="setup-val">Round 1</div></div>
+    <div class="setup-cell"><div class="setup-key">Time</div><div class="setup-val">~60–75 minutes</div></div>
+    <div class="setup-cell"><div class="setup-key">Report to</div><div class="setup-val"><a href="https://discord.gg/pyy3HAScM" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:underline;text-underline-offset:2px;">Join our Discord</a></div></div>
+  </div>
+</header>
+
+<main class="main" id="sections-container"></main>
+
+<section class="final">
+  <p class="eyebrow">Wrap-up</p>
+  <h2 class="final-title">Final<br><em>thoughts.</em></h2>
+  <p class="final-sub">Quick open questions before you're done — write as much or as little as you want.</p>
+  <div class="rating-row" id="stars">
+    <span class="star" data-v="1">★</span><span class="star" data-v="2">★</span>
+    <span class="star" data-v="3">★</span><span class="star" data-v="4">★</span>
+    <span class="star" data-v="5">★</span>
+    <span class="star-cap" id="star-cap">Overall UX rating</span>
+  </div>
+  <div class="q-block"><label class="q-label" for="q1">What felt confusing or hard to find your way around?</label><textarea class="q-ta" id="q1" placeholder="Specific moments help most."></textarea></div>
+  <div class="q-block"><label class="q-label" for="q2">What felt great, or worked exactly as you'd expect?</label><textarea class="q-ta" id="q2" placeholder="What we should protect."></textarea></div>
+  <div class="q-block"><label class="q-label" for="q3">Anything slow, glitchy, or broken that isn't already flagged?</label><textarea class="q-ta" id="q3" placeholder="Screen + what you saw."></textarea></div>
+  <div class="q-block"><label class="q-label" for="q4">What's the one thing that would make you actually use this — or the one thing holding you back?</label><textarea class="q-ta" id="q4" placeholder="Honest take — this is the most useful answer."></textarea></div>
+
+  <div class="viability-block">
+    <div class="viability-heading">Would you use it?</div>
+
+    <div class="viability-q" data-key="sentiment">
+      <div class="viability-q-label">How would you feel if you couldn't use BackChannel anymore?</div>
+      <div class="viability-options" id="vq-sentiment">
+        <button class="viability-opt" data-val="Very disappointed">Very disappointed</button>
+        <button class="viability-opt" data-val="Somewhat disappointed">Somewhat disappointed</button>
+        <button class="viability-opt" data-val="Not disappointed">Not disappointed</button>
+      </div>
+    </div>
+
+    <div class="viability-q viability-yn" data-key="would_refer">
+      <div class="viability-yn-label">Would you actually refer someone through this?</div>
+      <div class="viability-yn-btns">
+        <button class="viability-yn-btn" data-val="Yes">Yes</button>
+        <button class="viability-yn-btn" data-val="No">No</button>
+      </div>
+    </div>
+
+    <div class="viability-q viability-yn" data-key="would_use_job_hunting">
+      <div class="viability-yn-label">Would you have used this when you were hunting for a job?</div>
+      <div class="viability-yn-btns">
+        <button class="viability-yn-btn" data-val="Yes">Yes</button>
+        <button class="viability-yn-btn" data-val="No">No</button>
+      </div>
+    </div>
+
+    <div class="viability-q viability-yn" data-key="check_regularly_or_hiring">
+      <div class="viability-yn-label">Would you check this app regularly, or only when you're actively hiring?</div>
+      <div class="viability-yn-btns">
+        <button class="viability-yn-btn" data-val="Regularly">Regularly</button>
+        <button class="viability-yn-btn" data-val="Only when hiring">Only when hiring</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitFeedback()">Submit feedback →</button>
+</section>
+
+<div class="thankyou-screen" id="thankyou">
+  <div class="ty-check" id="ty-check">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </div>
+  <p class="ty-eyebrow" id="ty-eyebrow">Feedback received</p>
+  <h2 class="ty-title" id="ty-title">Thank you<br><em>so much.</em></h2>
+  <p class="ty-body" id="ty-body">Your feedback goes directly to the BackChannel team and helps us build something genuinely great. We read every single response.</p>
+  <div class="ty-divider" id="ty-divider"></div>
+  <p class="ty-launch" id="ty-launch">BackChannel is launching soon — stay tuned.</p>
+  <a class="ty-back" id="ty-back" href="index.html">Back to home</a>
+</div>
+
+<script>
+const SECTIONS = [
+  { id:'s1', num:'01', title:'First run & account setup', sub:'~15 min', goal:'Everything from launch through a fully verified sponsor profile.',
+    items:[
+      { a:'Launch the app and tap through the splash screen.' },
+      { a:'Choose Sponsor on the role-selection screen.' },
+      { a:'Step through the onboarding carousel.', lf:'Watch for anything confusing, skippable screens that shouldn\'t be, or steps that feel out of order.' },
+      { a:'Complete the profile questionnaire — company, title, how long you\'ve worked there, referral preferences, Q&A, and work email.', lf:'Every field should accept input cleanly. Nothing should feel out of place.' },
+      { a:'Verify your work email — try mistyping the address first, then resend the link, then open the link and return verified.', lf:'You should be able to correct a typo without getting stuck. The verified state should be clearly reflected in the app.' }
+    ]
+  },
+  { id:'s2', num:'02', title:'Auth recovery', sub:'~5 min', goal:'Make sure the full auth loop works cleanly in both directions.',
+    items:[
+      { a:'Log out from Account → Settings.' },
+      { a:'Log back in.' },
+      { a:'Trigger Forgot password from the login screen and follow the email link.', lf:'The link opens a web page in your browser — complete the reset there, then return to the app and log in. No dead ends.' }
+    ]
+  },
+  { id:'s3', num:'03', title:'Account / Profile', sub:'~8 min', goal:'Verify what you just created and confirm editing works across every field.',
+    items:[
+      { a:'Open Account and review every field you filled in during setup.', lf:'Everything should look exactly as you entered it. Nothing missing or garbled.' },
+      { a:'Edit each field — company, title, bio, Q&A, skills, photo — and confirm it saves.', lf:'Changes should persist after navigating away and returning. Nothing should silently fail to save.' },
+      { a:'Open Account → Change Password and set a new password, then confirm you can log back in with it.', lf:'It should require your current password and confirm the change clearly.' },
+      { a:'Check the work-email verification status and any "complete your profile" prompts.', lf:'It should be obvious what\'s verified, what\'s missing, and how to fix it.' }
+    ]
+  },
+  { id:'s4', num:'04', title:'Jobs', sub:'~10 min', goal:'Seed your applicant deck — do this before Feed so you have roles to review.',
+    items:[
+      { a:'Open Jobs, browse the ATS feed, open a job detail.' },
+      { a:'Sponsor one job and add insider insights — tap each prompt card to answer: day-to-day, team culture, who actually thrives here, and everything else worth knowing.', lf:'The insights step should feel like it\'s asking the right questions for someone who actually works there.' },
+      { a:'Create a custom job posting from scratch.' },
+      { a:'Confirm both jobs appear under My Sponsored.', lf:'Your custom job and your ATS-sourced job should both show up here immediately.' }
+    ]
+  },
+  { id:'s5', num:'05', title:'Feed', sub:'~15 min', goal:'The core Pass/Connect loop — your day-to-day as a sponsor.',
+    prelude:'If you skipped work-email verification in step 1, the feed may be gated until you verify — complete that first.',
+    items:[
+      { a:'Open Feed — the role-switcher pill should now show your sponsored roles.' },
+      { a:'Tap the role-switcher and confirm switching roles reloads the deck.', lf:'The deck and counter should reset for each role. Badge counts in the switcher should match what\'s actually in the deck.' },
+      { a:'Read a handful of applicant profiles end-to-end — scroll deep, check that the top header and bottom nav hide and reveal on scroll.', lf:'Layout and content should feel finished. Pass and Connect buttons should stay reachable at all times.' },
+      { a:'Tap Pass and Connect on a few profiles, watch the progress bar fill.' },
+      { a:'Trigger a match celebration by connecting on someone who already liked your role.' },
+      { a:'Check edge states — empty feed, end of deck, loading skeletons. Use a role with no applicants to see the "Out in the wild" state.', lf:'Each state should have a clear message or visual, not a blank screen.' }
+    ]
+  },
+  { id:'s6', num:'06', title:'Matches', sub:'~10 min', goal:'All the ways a sponsor interacts with applicants who\'ve expressed interest.',
+    prelude:'This tab is more useful with pre-seeded data — if your test account is fresh, some sections may be empty. Note what you see.',
+    items:[
+      { a:'Open Matches → Interested in Your Jobs. If the same person matched on multiple roles, look for the grouped card with a role-count pill — tap in and use the role-picker sheet.', lf:'The grouped card should show a clear count. The role-picker should let you choose which role to view.' },
+      { a:'Open a Sponsor Request and walk through "Sponsor & Connect" (sponsor the role, then connect with the applicant).', lf:'The flow should resolve cleanly with no dead ends.' },
+      { a:'Check the Active Pipeline section.', lf:'Active Pipeline shows people you\'ve referred and their current status. Progress should be legible at a glance.' },
+      { a:'Tap a match to open their full profile, then start a conversation from there.' }
+    ]
+  },
+  { id:'s7', num:'07', title:'Inbox', sub:'~10 min', goal:'The messaging layer — where referral conversations actually happen.',
+    prelude:'For real-time tests you\'ll need a second device or a teammate on the applicant side.',
+    items:[
+      { a:'Open Inbox — check the grouped conversation list. If someone appears in more than one role, they should show as a single row with an "N roles" pill. Tap to expand, tap outside to collapse.', lf:'Only one person\'s threads should be open at a time.' },
+      { a:'Open a thread and have the other side send a message while you\'re in it.', lf:'It should arrive in real time. Unread badges should clear when you\'re in the thread.' },
+      { a:'From inside a thread, find and walk through the referral flow.', lf:'You should be able to view the applicant\'s full profile and formally submit a referral without leaving the conversation context.' },
+      { a:'Unmatch someone and see where their conversation goes.', lf:'It shouldn\'t just vanish — look for a Past Connections or inactive state.' }
+    ]
+  },
+  { id:'s8', num:'08', title:'Notifications & cross-cutting', sub:'~8 min', goal:'Push notifications, the notifications screen, and general app health.',
+    items:[
+      { a:'Tap the bell icon — tap a notification to deep-link, mark one as read, swipe one to delete.', lf:'Each action should respond immediately. Tapping should land you on the right screen in the app.' },
+      { a:'Tap the clipboard icon to open the referral check-in modal.', lf:'Note what it says and whether it\'s easy to respond to and dismiss.' },
+      { a:'Background the app, trigger a push notification from the other side, and tap it from the lock screen.', lf:'You should land directly on the relevant screen — not just the app home.' },
+      { a:'Spot-check throughout your session: pull-to-refresh on each tab, fast tab switching, backgrounding and returning, and behavior with no network.', lf:'None of these should crash the app or leave you on a permanently broken screen.' }
+    ]
+  },
+  { id:'s9', num:'09', title:'Settings & cleanup', sub:'~5 min', goal:'Wrap up the session cleanly and confirm settings work.',
+    items:[
+      { a:'Open Account → Settings — toggle notification preferences on and off.', lf:'Each toggle should respond immediately and persist.' },
+      { a:'Go back to Jobs and unsponsor one of your jobs — pick a reason.', lf:'The job should disappear from My Sponsored immediately. The reason options should feel sensible.' },
+      { a:'Log out as the final step.' }
+    ]
+  }
+];
+
+const state = {};
+let starRating = 0;
+const survey = {};
+function k(s,i){return s+'_'+i;}
+function isChecked(s,i){return(state[k(s,i)]||{}).checked||false;}
+function getStatus(s,i){return(state[k(s,i)]||{}).status||null;}
+function totalItems(){return SECTIONS.reduce((n,s)=>n+s.items.length,0);}
+function totalChecked(){return SECTIONS.reduce((n,s)=>n+s.items.filter((_,i)=>isChecked(s.id,i)).length,0);}
+function updateProgress(){const total=totalItems(),done=totalChecked();const pct=total?Math.round(done/total*100):0;document.getElementById('nav-fill').style.width=pct+'%';document.getElementById('nav-pct').textContent=pct+'%';}
+function updateSectionBar(sId){const sec=SECTIONS.find(s=>s.id===sId);if(!sec)return;const done=sec.items.filter((_,i)=>isChecked(sId,i)).length;const pct=sec.items.length?Math.round(done/sec.items.length*100):0;const fill=document.getElementById('sfill-'+sId);const meta=document.getElementById('smeta-'+sId);if(fill)fill.style.width=pct+'%';if(meta)meta.textContent=done+'/'+sec.items.length;}
+function toggleCheck(sId,idx){if(!state[k(sId,idx)])state[k(sId,idx)]={};state[k(sId,idx)].checked=!state[k(sId,idx)].checked;const item=document.getElementById('item-'+sId+'-'+idx);const chk=document.getElementById('chk-'+sId+'-'+idx);if(state[k(sId,idx)].checked){item.classList.add('checked');chk.classList.add('checked');}else{item.classList.remove('checked');chk.classList.remove('checked');}updateSectionBar(sId);updateProgress();saveToStorage();}
+function setStatus(sId,idx,val){if(!state[k(sId,idx)])state[k(sId,idx)]={};state[k(sId,idx)].status=val;const item=document.getElementById('item-'+sId+'-'+idx);item.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('ok','warn','blk'));const map={ok:'ok',warn:'warn',block:'blk'};const btn=item.querySelector('[data-st="'+val+'"]');if(btn)btn.classList.add(map[val]);saveToStorage();}
+function saveNotes(sId,idx,v){if(!state[k(sId,idx)])state[k(sId,idx)]={};state[k(sId,idx)].notes=v;saveToStorage();}
+function autoResize(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+function toggleSection(id){document.getElementById(id).classList.toggle('open');}
+function renderSections(){
+  const c=document.getElementById('sections-container');c.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const div=document.createElement('div');div.className='section';div.id=sec.id;
+    const preludeHtml=sec.prelude?`<p class="sec-prelude">${sec.prelude}</p>`:'';
+    const itemsHtml=sec.items.map((item,idx)=>{
+      const lfHtml=item.lf?`<div class="look-for"><strong>Look for:</strong> ${item.lf}</div>`:'';
+      return `<div class="item" id="item-${sec.id}-${idx}"><div class="ichk" id="chk-${sec.id}-${idx}" onclick="toggleCheck('${sec.id}',${idx})" role="checkbox" aria-checked="false" tabindex="0" onkeydown="if(event.key===' '){event.preventDefault();toggleCheck('${sec.id}',${idx})}"></div><div class="item-step" onclick="toggleCheck('${sec.id}',${idx})">${sec.num} · ${String(idx+1).padStart(2,'0')}</div><div class="item-action" onclick="toggleCheck('${sec.id}',${idx})">${item.a}</div>${lfHtml}<div class="item-controls"><button class="sbtn" data-st="ok" onclick="setStatus('${sec.id}',${idx},'ok')">Works</button><button class="sbtn" data-st="warn" onclick="setStatus('${sec.id}',${idx},'warn')">Issue</button><button class="sbtn" data-st="block" onclick="setStatus('${sec.id}',${idx},'block')">Blocked</button></div><textarea class="item-notes" placeholder="Notes…" oninput="autoResize(this);saveNotes('${sec.id}',${idx},this.value)"></textarea></div>`;
+    }).join('');
+    div.innerHTML=`<div class="sec-header" onclick="toggleSection('${sec.id}')"><span class="sec-num">${sec.num}.</span><div class="sec-info"><div class="sec-title">${sec.title}</div><div class="sec-meta"><span id="smeta-${sec.id}">0/${sec.items.length}</span><div class="sec-bar"><div class="sec-fill" id="sfill-${sec.id}"></div></div><span>${sec.sub}</span></div></div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div><div class="sec-body"><div class="sec-goal">${sec.goal}${preludeHtml}</div>${itemsHtml}</div>`;
+    c.appendChild(div);
+  });
+  document.getElementById('s1').classList.add('open');
+  updateProgress();
+}
+document.getElementById('stars').addEventListener('click',e=>{const star=e.target.closest('.star');if(!star)return;starRating=parseInt(star.dataset.v);const labels=['','Poor','Fair','Okay','Good','Excellent'];document.querySelectorAll('.star').forEach(s=>s.classList.toggle('lit',parseInt(s.dataset.v)<=starRating));const cap=document.getElementById('star-cap');cap.textContent=labels[starRating]+' · '+starRating+'/5';cap.classList.add('on');saveToStorage();});
+
+// Viability block — sentiment (single-select) and yes/no questions
+document.querySelectorAll('.viability-q').forEach(group => {
+  const key = group.dataset.key;
+  if (!key) return;
+  group.querySelectorAll('.viability-opt, .viability-yn-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.viability-opt, .viability-yn-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      survey[key] = btn.dataset.val;
+      saveToStorage();
+    });
+  });
+});
+function buildIssues(){const issues=[];SECTIONS.forEach(sec=>{sec.items.forEach((item,i)=>{const st=getStatus(sec.id,i),nt=(state[k(sec.id,i)]||{}).notes||'';if(st==='warn'||st==='block'){issues.push('['+sec.title+'] '+sec.num+'.'+String(i+1).padStart(2,'0')+': '+item.a.substring(0,100)+(st==='block'?' [BLOCKED]':' [ISSUE]')+(nt?' — '+nt:''));}});});return issues;}
+function showThankYou(){
+  const el=document.getElementById('thankyou');
+  el.classList.add('visible');
+  requestAnimationFrame(()=>{
+    el.classList.add('shown');
+    setTimeout(()=>document.getElementById('ty-check').classList.add('in'),100);
+    setTimeout(()=>document.getElementById('ty-eyebrow').classList.add('in'),200);
+    setTimeout(()=>document.getElementById('ty-title').classList.add('in'),300);
+    setTimeout(()=>document.getElementById('ty-body').classList.add('in'),400);
+    setTimeout(()=>document.getElementById('ty-divider').classList.add('in'),500);
+    setTimeout(()=>document.getElementById('ty-launch').classList.add('in'),560);
+    setTimeout(()=>document.getElementById('ty-back').classList.add('in'),700);
+  });
+}
+async function submitFeedback(){
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;
+  btn.textContent='Submitting…';
+  const total=totalItems(),done=totalChecked();
+  const issues=buildIssues();
+  const name=localStorage.getItem('bc_sponsor_name')||'—';
+  const payload={
+    role:'sponsor',
+    beta_round:'Round 1',
+    name,
+    rating:starRating?starRating+'/5':'—',
+    completed:done,
+    total,
+    pct:Math.round(done/total*100)+'%',
+    issueCount:issues.length,
+    issues:issues.join(' | ')||'—',
+    q1:document.getElementById('q1')?.value.trim()||'—',
+    q2:document.getElementById('q2')?.value.trim()||'—',
+    q3:document.getElementById('q3')?.value.trim()||'—',
+    q4:document.getElementById('q4')?.value.trim()||'—',
+    sentiment: survey.sentiment || '—',
+    would_refer: survey.would_refer || '—',
+    would_use_job_hunting: survey.would_use_job_hunting || '—',
+    check_regularly_or_hiring: survey.check_regularly_or_hiring || '—',
+  };
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbzSWLSbr_D6l_gNYik4ly6kRlEjJh2BE3jpMwbknHALBGnKGqMjtAlwJJT0L0HRFQEy7Q/exec',{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
+  } catch(e){ /* still show thank you even if network fails */ }
+  clearStorage();
+  showThankYou();
+}
+
+const STORAGE_KEY = 'bc_sponsor_state';
+
+function getTesterName() {
+  try { return localStorage.getItem('bc_sponsor_name') || ''; } catch(e) { return ''; }
+}
+
+function saveToStorage() {
+  try {
+    const saved = {
+      state,
+      starRating,
+      survey,
+      q1: document.getElementById('q1')?.value || '',
+      q2: document.getElementById('q2')?.value || '',
+      q3: document.getElementById('q3')?.value || '',
+      q4: document.getElementById('q4')?.value || '',
+      device: document.getElementById('device-input')?.value || '',
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+  } catch(e) {}
+}
+
+function restoreFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+
+    // Restore state object
+    if (saved.state) Object.assign(state, saved.state);
+
+    // Restore star rating
+    if (saved.starRating) {
+      starRating = saved.starRating;
+      const labels = ['','Poor','Fair','Okay','Good','Excellent'];
+      document.querySelectorAll('.star').forEach(s => s.classList.toggle('lit', parseInt(s.dataset.v) <= starRating));
+      const cap = document.getElementById('star-cap');
+      if (cap) { cap.textContent = labels[starRating] + ' · ' + starRating + '/5'; cap.classList.add('on'); }
+    }
+
+    // Restore survey (viability block) selections
+    if (saved.survey) {
+      Object.assign(survey, saved.survey);
+      document.querySelectorAll('.viability-q[data-key]').forEach(group => {
+        const key = group.dataset.key;
+        const val = survey[key];
+        if (!val) return;
+        group.querySelectorAll('.viability-opt, .viability-yn-btn').forEach(b => {
+          b.classList.toggle('selected', b.dataset.val === val);
+        });
+      });
+    }
+
+    // Restore text areas
+    ['q1','q2','q3','q4'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && saved[id]) { el.value = saved[id]; autoResize(el); }
+    });
+
+    // Restore device field
+    const deviceEl = document.getElementById('device-input');
+    if (deviceEl && saved.device) deviceEl.value = saved.device;
+  } catch(e) {}
+}
+
+function restoreItemUI() {
+  SECTIONS.forEach(sec => {
+    sec.items.forEach((_, idx) => {
+      const itemEl = document.getElementById('item-' + sec.id + '-' + idx);
+      const chkEl  = document.getElementById('chk-'  + sec.id + '-' + idx);
+      const noteEl = document.querySelector('#item-' + sec.id + '-' + idx + ' .item-notes');
+      if (!itemEl) return;
+      const st = state[k(sec.id, idx)] || {};
+      if (st.checked) { itemEl.classList.add('checked'); if(chkEl) chkEl.classList.add('checked'); }
+      if (st.status) {
+        const map = {ok:'ok', warn:'warn', block:'blk'};
+        const btn = itemEl.querySelector('[data-st="' + st.status + '"]');
+        if (btn) btn.classList.add(map[st.status]);
+      }
+      if (st.notes && noteEl) { noteEl.value = st.notes; autoResize(noteEl); }
+    });
+    updateSectionBar(sec.id);
+  });
+  updateProgress();
+}
+
+function clearStorage() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+renderSections();
+restoreFromStorage();
+requestAnimationFrame(() => {
+  restoreItemUI();
+  const nameEl = document.getElementById('tester-name-display');
+  const name = getTesterName();
+  if (nameEl) {
+    if (name) {
+      nameEl.textContent = name;
+      nameEl.style.fontStyle = 'normal';
+      nameEl.style.color = '';
+    } else {
+      nameEl.innerHTML = '<input type="text" placeholder="Your name" id="name-fallback-input" style="background:transparent;border:none;outline:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--ink);width:100%;padding:0;" />';
+      const ni = document.getElementById('name-fallback-input');
+      if (ni) ni.addEventListener('input', function(){ saveToStorage(); });
+    }
+  }
+});
+</script>
+<script>
+// Save open-ended answers on input
+['q1','q2','q3','q4'].forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', function(){ saveToStorage(); });
+});
+// Save device field on input
+var deviceEl = document.getElementById('device-input');
+if(deviceEl) deviceEl.addEventListener('input', function(){ saveToStorage(); });
+</script>
+<script>
+(function(){
+  const text='Tell us what you find.';
+  const el=document.getElementById('tw-target');
+  const cur=document.getElementById('tw-cursor');
+  let i=0;
+  setTimeout(function(){
+    cur.style.opacity='1';
+    cur.style.animation='blink 0.8s step-end 7, fadeOutCursor 0.3s 6.5s ease forwards';
+    function type(){
+      if(i<=text.length){el.textContent=text.slice(0,i);i++;setTimeout(type,i===1?160:62+Math.random()*28);}
+    }
+    type();
+  },600);
+})();
+</script>
+</body>
+</html>

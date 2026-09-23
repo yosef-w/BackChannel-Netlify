@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Terms of Service — BackChannel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0a0a0a;
+  --paper: #ffffff;
+  --off-white: #fafaf8;
+  --surface: #f5f5f2;
+  --border: #e8e8e4;
+  --border-strong: #d0d0ca;
+  --body: #4a4a44;
+  --muted: #888880;
+  --faint: #b8b8b0;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'DM Serif Display', 'Times New Roman', serif;
+}
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.nav-wordmark {
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink);
+  text-decoration: none;
+}
+.nav-right {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--faint);
+}
+
+/* ── MAIN ── */
+main { flex: 1; width: 100%; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 72px 40px 64px; }
+
+.eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 52px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.page-sub {
+  font-size: 14px; font-weight: 400; color: var(--muted);
+  margin-bottom: 44px; padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── TOC ── */
+.toc {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 56px;
+}
+.toc-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 16px;
+}
+.toc ol { list-style: none; counter-reset: toc-counter; display: grid; gap: 9px; }
+.toc li { counter-increment: toc-counter; font-size: 14px; }
+.toc li::before { content: counter(toc-counter) "."; color: var(--faint); margin-right: 8px; font-weight: 600; }
+.toc a {
+  color: var(--body); text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.toc a:hover { color: var(--ink); border-bottom-color: var(--border-strong); }
+
+/* ── SECTIONS ── */
+.legal-section { margin-bottom: 48px; scroll-margin-top: 76px; }
+.legal-section h2 {
+  font-family: var(--serif);
+  font-size: 26px; font-weight: 400; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 16px;
+}
+.legal-section h3 {
+  font-family: var(--sans);
+  font-size: 14px; font-weight: 700; letter-spacing: 0.01em;
+  color: var(--ink); margin: 22px 0 10px;
+}
+.legal-section p { font-size: 15px; line-height: 1.75; color: var(--body); margin-bottom: 14px; }
+.legal-section ul, .legal-section ol.plain { margin: 0 0 14px 0; padding-left: 22px; }
+.legal-section li { font-size: 15px; line-height: 1.75; color: var(--body); margin-bottom: 7px; }
+.legal-section strong { color: var(--ink); font-weight: 600; }
+.legal-section a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--border-strong); }
+
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 22px 0;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+}
+.callout p.shout {
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+footer a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--border-strong); }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 600px) {
+  .nav { padding: 0 20px; }
+  .wrap { padding: 48px 20px 40px; }
+  .toc { padding: 22px 20px; }
+  .callout { padding: 18px 20px; }
+  .page-sub { margin-bottom: 36px; padding-bottom: 28px; }
+  footer { padding: 22px 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-wordmark" href="index.html">BackChannel</a>
+  <span class="nav-right">Terms of Service</span>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <div class="eyebrow">Legal</div>
+    <h1 class="page-title">Terms of Service</h1>
+    <p class="page-sub">Last updated: June 17, 2026</p>
+
+    <nav class="toc" aria-label="Table of contents">
+      <div class="toc-label">On this page</div>
+      <ol>
+        <li><a href="#acceptance">Acceptance of these terms</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#description">Description of the service</a></li>
+        <li><a href="#accounts">Your account</a></li>
+        <li><a href="#user-content">User content and license</a></li>
+        <li><a href="#acceptable-use">Acceptable use</a></li>
+        <li><a href="#marketplace-role">Our role as a marketplace</a></li>
+        <li><a href="#third-party">Third-party services</a></li>
+        <li><a href="#ip">Intellectual property</a></li>
+        <li><a href="#payments">Subscriptions and payments</a></li>
+        <li><a href="#warranties">Disclaimer of warranties</a></li>
+        <li><a href="#liability">Limitation of liability</a></li>
+        <li><a href="#indemnification">Indemnification</a></li>
+        <li><a href="#termination">Term and termination</a></li>
+        <li><a href="#governing-law">Governing law and dispute resolution</a></li>
+        <li><a href="#changes">Changes to these terms</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </nav>
+
+    <section class="legal-section" id="acceptance">
+      <h2>1. Acceptance of these terms</h2>
+      <p>By creating an account, accessing, or using the BackChannel mobile application (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you don't agree, please don't use the Service. These Terms form a binding agreement between you and [Legal entity name] ("BackChannel," "we," "us," or "our").</p>
+    </section>
+
+    <section class="legal-section" id="eligibility">
+      <h2>2. Eligibility</h2>
+      <p>You must be at least 16 years old to use BackChannel, and you must be able to form a legally binding contract — for example, you must not be barred from using the Service under the laws of your jurisdiction or under any applicable export control or sanctions laws. By using BackChannel, you represent that you meet these requirements. If you're using the Service as a Sponsor representing your employer, you also represent that the information you provide about your role, company, and employment is accurate.</p>
+    </section>
+
+    <section class="legal-section" id="description">
+      <h2>3. Description of the service</h2>
+      <p>BackChannel is a two-sided marketplace connecting Applicants, who build a profile and browse jobs sponsored by companies, with Sponsors, who are individual employees at those companies that choose to refer candidates for open roles. When an Applicant and a Sponsor express mutual interest, the Service creates a match and opens a chat between them, which can — entirely at the Sponsor's discretion — lead to a referral that we track through stages of a hiring pipeline. The features available to you, and how they work, may change as we continue developing the Service.</p>
+    </section>
+
+    <section class="legal-section" id="accounts">
+      <h2>4. Your account</h2>
+      <p>You agree to provide accurate, current information when creating your account, and to keep it up to date. You're responsible for keeping your login credentials secure and for all activity that occurs under your account. Notify us promptly if you believe your account has been compromised. Each person may maintain only one account, and accounts may not be transferred or sold. We may suspend or terminate accounts that violate these Terms, as described in Section 14.</p>
+    </section>
+
+    <section class="legal-section" id="user-content">
+      <h2>5. User content and license</h2>
+      <p>"User Content" means the profile information, resumes, photos, messages, "insights" answers, and any other material you submit through the Service.</p>
+      <p>You retain ownership of your User Content. By submitting it, you grant BackChannel a non-exclusive, worldwide, royalty-free license — sublicensable only to the service providers that help us operate the Service — to host, store, reproduce, display, and transmit your User Content as necessary to provide and improve the Service. For example, this license is what lets us display your applicant profile and resume to a Sponsor you've matched with, or display a Sponsor's referral preferences to Applicants browsing a role.</p>
+      <p>This license ends when you delete the specific content or your account, except to the extent your content has already been shared with another user as intended by the Service — for instance, a message you sent remains visible to its recipient — or where copies need to be retained as described in our Privacy Policy.</p>
+      <p>You're responsible for your User Content and represent that you have the right to share it, and that doing so doesn't violate these Terms or any other person's rights.</p>
+    </section>
+
+    <section class="legal-section" id="acceptable-use">
+      <h2>6. Acceptable use</h2>
+      <p>You agree not to, and not to help anyone else:</p>
+      <ul>
+        <li>Harass, discriminate against, or abuse other users, including discrimination on the basis of any protected characteristic in connection with hiring or referrals</li>
+        <li>Provide false information, including misrepresenting your identity, employment, employer, education, work authorization, or any other profile detail</li>
+        <li>Offer, request, or accept payment in exchange for a referral, interview, or any hiring outcome</li>
+        <li>Impersonate any person or entity</li>
+        <li>Scrape, crawl, or otherwise extract data from the Service using automated means</li>
+        <li>Send spam or unsolicited commercial messages through the Service</li>
+        <li>Circumvent the platform — for example, contacting another user outside the app specifically to avoid BackChannel's matching, messaging, or referral process in a way that violates these Terms</li>
+        <li>Upload malicious code, interfere with the Service's operation, or attempt to reverse-engineer the app</li>
+        <li>Use the Service for any unlawful purpose</li>
+      </ul>
+      <p>We may investigate suspected violations and remove content, or suspend or terminate accounts, that violate this section.</p>
+    </section>
+
+    <section class="legal-section" id="marketplace-role">
+      <h2>7. Our role as a marketplace</h2>
+      <div class="callout">
+        <div class="callout-label">Important</div>
+        <p class="shout">BackChannel facilitates introductions between Applicants and Sponsors. We are not an employer, recruiter, staffing agency, or employment agency, and we are not a party to any employment relationship, hiring decision, or offer that may result from use of the Service.</p>
+        <p class="shout">We do not guarantee that you will receive a referral, an interview, a job offer, or any other outcome. Sponsors decide, in their sole discretion, whether and whom to refer; Applicants decide whether and how to pursue opportunities surfaced through the Service.</p>
+        <p class="shout">Sponsors act on their own behalf, not as agents of BackChannel. A Sponsor's statements about their employer, job title, tenure, referral authority, or ability to refer candidates are self-reported and are not verified by BackChannel beyond what's described below.</p>
+        <p class="shout">Verifying a Sponsor's work email confirms only that the Sponsor controls an email address at the domain associated with the company they claim to work for. It does not confirm that the Sponsor currently holds that job title, has the authority to refer candidates, or that any representation the Sponsor makes about the role, hiring process, or company is accurate.</p>
+        <p class="shout">We do not review, verify, or guarantee the accuracy of job postings, referral preferences, or any other content provided by Sponsors or Applicants, and we are not responsible for any hiring decision, employment outcome, or dispute arising between users.</p>
+      </div>
+    </section>
+
+    <section class="legal-section" id="third-party">
+      <h2>8. Third-party services</h2>
+      <p>The Service relies on third-party providers to operate, as described in our <a href="privacy.html">Privacy Policy</a>, and is distributed through platforms like Apple's App Store and TestFlight. We're not responsible for the practices, content, or availability of third-party services, and your use of them may be subject to their own separate terms.</p>
+    </section>
+
+    <section class="legal-section" id="ip">
+      <h2>9. Intellectual property</h2>
+      <p>BackChannel and its licensors own all rights in the Service, including its software, design, trademarks — including the name "BackChannel" and our logo — and all content we create. Other than the limited license to use the app as intended, nothing in these Terms grants you any rights to our intellectual property.</p>
+    </section>
+
+    <section class="legal-section" id="payments">
+      <h2>10. Subscriptions and payments</h2>
+      <p>BackChannel does not currently charge for any features. If and when we introduce paid features or subscriptions, they will be billed through Apple's In-App Purchase system and managed via RevenueCat, and will be subject to Apple's Media Services Terms along with any additional terms — including pricing, billing cycle, auto-renewal, and cancellation or refund policies — that we provide at that time.</p>
+      <p><em>[Placeholder — this section is to be completed in full once paid features launch.]</em></p>
+    </section>
+
+    <section class="legal-section" id="warranties">
+      <h2>11. Disclaimer of warranties</h2>
+      <p>The Service is provided "as is" and "as available," without warranties of any kind, whether express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. We don't warrant that the Service will be uninterrupted, secure, or error-free, or that any match, referral, interview, or hiring outcome will result from your use of the Service.</p>
+    </section>
+
+    <section class="legal-section" id="liability">
+      <h2>12. Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, [Legal entity name] and its officers, employees, and affiliates will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, data, or employment opportunity, arising from your use of the Service — including any decision made or not made by a Sponsor or employer. Our total liability for any claim arising out of these Terms or the Service will not exceed the greater of (a) the amount you paid us, if any, in the twelve months before the claim arose, or (b) one hundred dollars ($100).</p>
+    </section>
+
+    <section class="legal-section" id="indemnification">
+      <h2>13. Indemnification</h2>
+      <p>You agree to indemnify and hold harmless BackChannel and its officers, employees, and affiliates from any claims, damages, liabilities, and expenses, including reasonable attorneys' fees, arising from your use of the Service, your User Content, or your violation of these Terms or any law or third party's rights.</p>
+    </section>
+
+    <section class="legal-section" id="termination">
+      <h2>14. Term and termination</h2>
+      <p>You may stop using the Service and delete your account at any time using the in-app "Delete Account" feature described in our <a href="privacy.html">Privacy Policy</a>. We may suspend or terminate your account or access to the Service, with or without notice, if we believe you've violated these Terms, created risk or legal exposure for us, or for any other reason at our discretion — including if we discontinue the Service altogether. Sections of these Terms that by their nature should survive termination, including Sections 9 and 11 through 16, will continue to apply.</p>
+    </section>
+
+    <section class="legal-section" id="governing-law">
+      <h2>15. Governing law and dispute resolution</h2>
+      <p>These Terms are governed by the laws of [Governing jurisdiction], without regard to its conflict-of-laws principles. Any dispute arising from these Terms or the Service will be brought exclusively in the courts located in [Governing jurisdiction], and you consent to the personal jurisdiction of those courts. <em>[Placeholder — add any arbitration or alternative dispute-resolution provisions appropriate to your jurisdiction and business needs.]</em></p>
+    </section>
+
+    <section class="legal-section" id="changes">
+      <h2>16. Changes to these terms</h2>
+      <p>We may update these Terms as the Service evolves. When we do, we'll update the "Last updated" date at the top of this page, and if a change is material, we'll provide additional notice — for example, through an in-app notification. Your continued use of the Service after a change takes effect means you accept the updated Terms.</p>
+    </section>
+
+    <section class="legal-section" id="contact">
+      <h2>17. Contact us</h2>
+      <p>If you have questions about these Terms, contact us at <a href="mailto:[Contact email]">[Contact email]</a>.</p>
+      <p>[Legal entity name]<br>[Company mailing address]<br>Effective date: [Effective date]</p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 BackChannel. All rights reserved.</span>
+  <span class="footer-links"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="mailto:[Contact email]">Contact</a></span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BackChannel — Beta Testing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0a0a0a; --paper: #ffffff; --off-white: #fafaf8; --surface: #f5f5f2;
+  --border: #e8e8e4; --border-strong: #c8c8c0; --body: #4a4a44;
+  --muted: #888880; --faint: #b8b8b0;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'DM Serif Display', 'Times New Roman', serif;
+}
+html { -webkit-text-size-adjust: 100%; height: 100%; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; overflow-x: hidden; }
+
+.bg-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.bg-grain { position: absolute; inset: -50%; width: 200%; height: 200%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.018; animation: drift 18s linear infinite; }
+.bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0; animation: orbIn 1.8s 0.6s ease forwards; }
+.bg-orb-1 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%); top: -120px; left: 50%; transform: translateX(-50%); }
+.bg-orb-2 { width: 360px; height: 360px; background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%); bottom: 80px; right: -80px; }
+
+nav { position: relative; z-index: 10; padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; opacity: 0; animation: fadeDown 0.5s 0.1s ease forwards; }
+.wordmark { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.nav-right { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--faint); text-transform: uppercase; }
+
+.hero { position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 40px 72px; text-align: center; max-width: 720px; margin: 0 auto; width: 100%; }
+
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards; }
+.badge-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); animation: pulse 2.5s 1.5s ease-in-out infinite; }
+
+.hero-title { font-family: var(--serif); font-size: clamp(42px, 8vw, 66px); font-weight: 400; line-height: 1.04; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.7s 0.45s ease forwards; }
+.hero-title em { font-style: italic; color: var(--muted); position: relative; }
+.cursor { display: inline-block; width: 3px; height: 0.85em; background: var(--muted); margin-left: 2px; vertical-align: middle; border-radius: 1px; animation: blink 1s 2.2s step-end 4, fadeOutCursor 0.3s 6.2s ease forwards; opacity: 0; animation-fill-mode: forwards; }
+
+.hero-body { font-size: 17px; font-weight: 300; line-height: 1.7; color: var(--body); max-width: 440px; margin: 0 auto 56px; opacity: 0; animation: fadeUp 0.6s 0.65s ease forwards; }
+
+.role-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 560px; opacity: 0; animation: fadeUp 0.6s 0.82s ease forwards; }
+
+.role-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; text-align: left; padding: 28px 26px 24px; background: var(--off-white); border: 1px solid var(--border); border-radius: 20px; cursor: pointer; color: inherit; overflow: hidden; transition: border-color 0.25s, background 0.25s, box-shadow 0.25s; -webkit-tap-highlight-color: transparent; transform-style: preserve-3d; will-change: transform; }
+.role-card::after { content: ''; position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.role-card:hover::after { opacity: 1; }
+.role-card:hover { border-color: var(--border-strong); background: var(--paper); box-shadow: 0 8px 32px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04); }
+.role-card:active { transform: scale(0.98) !important; transition: transform 0.1s; }
+.role-card:hover .role-arrow { transform: translate(3px, -3px); }
+.role-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; }
+.role-title { font-family: var(--serif); font-size: 22px; font-weight: 400; line-height: 1.15; color: var(--ink); margin-bottom: 12px; }
+.role-title em { font-style: italic; color: var(--muted); }
+.role-desc { font-size: 13px; font-weight: 400; color: var(--body); line-height: 1.58; margin-bottom: 28px; flex: 1; }
+.role-cta { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.role-arrow { display: inline-block; transition: transform 0.22s cubic-bezier(0.4,0,0.2,1); font-style: normal; }
+
+/* ── NAME MODAL OVERLAY ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(10,10,10,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.visible { display: flex; }
+.modal-overlay.shown { opacity: 1; }
+
+.modal {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 32px 28px;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s ease;
+  opacity: 0;
+  position: relative;
+}
+.modal.shown { transform: translateY(0) scale(1); opacity: 1; }
+
+.modal-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 4px 12px;
+  margin-bottom: 20px;
+}
+.modal-dot { width: 5px; height: 5px; background: #22c55e; border-radius: 50%; }
+
+.modal-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.modal-title em { font-style: italic; color: var(--muted); }
+
+.modal-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+
+.modal-input-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 16px;
+  -webkit-appearance: none;
+}
+.modal-input:focus { border-color: var(--border-strong); }
+.modal-input::placeholder { color: var(--faint); font-weight: 400; }
+
+.modal-actions { display: flex; gap: 8px; }
+
+.modal-btn-primary {
+  flex: 1;
+  padding: 13px 20px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.modal-btn-primary:active { transform: scale(0.98); opacity: 0.85; }
+.modal-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.modal-btn-cancel {
+  padding: 13px 18px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.modal-btn-cancel:hover { border-color: var(--border-strong); color: var(--ink); }
+
+.or-divider { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 400; color: var(--faint); margin-top: 24px; width: 100%; max-width: 560px; opacity: 0; animation: fadeUp 0.5s 1s ease forwards; }
+.or-line { flex: 1; height: 1px; background: var(--border); }
+
+.stats-strip { position: relative; z-index: 10; display: flex; gap: 32px; align-items: center; justify-content: center; padding: 20px 40px; border-top: 1px solid var(--border); opacity: 0; animation: fadeUp 0.5s 1.1s ease forwards; }
+.stat { text-align: center; }
+.stat-num { font-family: var(--serif); font-size: 21px; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; }
+.stat-label { font-size: 11px; font-weight: 500; color: var(--faint); letter-spacing: 0.04em; margin-top: 2px; }
+.stat-sep { width: 1px; height: 30px; background: var(--border); }
+
+footer { position: relative; z-index: 10; padding: 18px 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; opacity: 0; animation: fadeUp 0.5s 1.2s ease forwards; }
+.footer-left { font-size: 12px; font-weight: 400; color: var(--faint); }
+.footer-right { font-size: 12px; font-weight: 400; color: var(--faint); }
+.footer-right a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.footer-right a:hover { color: var(--ink); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes orbIn { from { opacity:0; } to { opacity:1; } }
+@keyframes drift { from { transform:translate(0,0); } to { transform:translate(-5%,-5%); } }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,0.4);} 70%{box-shadow:0 0 0 6px rgba(34,197,94,0);} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0);} }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+@keyframes fadeOutCursor { to { opacity:0; } }
+
+@media (max-width: 540px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 48px 20px 56px; }
+  .role-row { grid-template-columns: 1fr; gap: 12px; }
+  .role-card { padding: 24px 22px 20px; }
+  .stats-strip { gap: 20px; padding: 16px 20px; }
+  .stat-num { font-size: 18px; }
+  footer { padding: 14px 20px; flex-direction: column; gap: 6px; text-align: center; }
+  .modal { padding: 28px 24px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; animation-delay:0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas" aria-hidden="true">
+  <div class="bg-grain"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+</div>
+
+<nav>
+  <a class="wordmark" href="#">BackChannel</a>
+  <span class="nav-right">Closed Beta</span>
+</nav>
+
+<main class="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    You're in — limited testers only
+  </div>
+
+  <h1 class="hero-title">
+    Welcome to<br><em id="typed-text"></em><span class="cursor" id="cursor"></span>
+  </h1>
+
+  <p class="hero-body">
+    You're one of the first people to test this. Use it like you would for real, and tell us what you find. Pick your role below to get started.
+  </p>
+
+  <div class="role-row" id="role-row">
+    <div class="role-card" id="card-sponsor" onclick="openModal('sponsor')">
+      <div class="role-label">I work at a company</div>
+      <div class="role-title">I'm a<br><em>Sponsor</em></div>
+      <p class="role-desc">You refer talented people to open roles at your company. Browse applicant profiles, match with candidates you'd vouch for, and make introductions that matter.</p>
+      <div class="role-cta">Start sponsor checklist <span class="role-arrow">↗</span></div>
+    </div>
+
+    <div class="role-card" id="card-applicant" onclick="openModal('applicant')">
+      <div class="role-label">I'm looking for a job</div>
+      <div class="role-title">I'm an<br><em>Applicant</em></div>
+      <p class="role-desc">You want someone on the inside to champion your application. Browse jobs, connect with sponsors, and skip the black hole of sending resumes into the void.</p>
+      <div class="role-cta">Start applicant checklist <span class="role-arrow">↗</span></div>
+    </div>
+  </div>
+
+  <div class="or-divider">
+    <span class="or-line"></span>
+    <span>Not sure? Pick the one that matches your real life.</span>
+    <span class="or-line"></span>
+  </div>
+</main>
+
+<!-- Name modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-role-badge">
+      <span class="modal-dot"></span>
+      <span id="modal-role-label">Sponsor</span>
+    </div>
+    <h2 class="modal-title">Before you start,<br><em>what's your name?</em></h2>
+    <p class="modal-sub">We'll attach it to your feedback so we know who to thank — and who to follow up with if we have questions.</p>
+    <label class="modal-input-label" for="modal-name-input">Your name</label>
+    <input
+      class="modal-input"
+      id="modal-name-input"
+      type="text"
+      placeholder="e.g. Alex Johnson"
+      autocomplete="name"
+      autocorrect="off"
+      spellcheck="false"
+      onkeydown="if(event.key==='Enter')confirmName()"
+    />
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn-primary" id="modal-confirm-btn" onclick="confirmName()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats-strip">
+  <div class="stat"><div class="stat-num">~75 min</div><div class="stat-label">Sponsor checklist</div></div>
+  <div class="stat-sep"></div>
+  <div class="stat"><div class="stat-num">~60 min</div><div class="stat-label">Applicant checklist</div></div>
+  <div class="stat-sep"></div>
+  <div class="stat"><a href="https://discord.gg/pyy3HAScM" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><div class="stat-num">Discord</div><div class="stat-label">Report issues to</div></a></div>
+</div>
+
+<footer>
+  <span class="footer-left">© 2026 BackChannel. Closed beta — do not share externally.</span>
+  <span class="footer-right">Questions? <a href="https://discord.gg/pyy3HAScM" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:underline;text-underline-offset:2px;">Join our Discord</a></span>
+</footer>
+
+<script>
+let pendingRole = null;
+
+// ── MODAL ──
+function openModal(role) {
+  pendingRole = role;
+  const overlay = document.getElementById('modal-overlay');
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-role-label').textContent = role === 'sponsor' ? 'Sponsor' : 'Applicant';
+
+  // Pre-fill name if returning
+  const saved = getSavedName(role);
+  const input = document.getElementById('modal-name-input');
+  input.value = saved || '';
+
+  overlay.classList.add('visible');
+  requestAnimationFrame(() => {
+    overlay.classList.add('shown');
+    setTimeout(() => {
+      modal.classList.add('shown');
+      input.focus();
+    }, 60);
+  });
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modal-overlay');
+  const modal = document.getElementById('modal');
+  modal.classList.remove('shown');
+  overlay.classList.remove('shown');
+  setTimeout(() => { overlay.classList.remove('visible'); pendingRole = null; }, 280);
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function getSavedName(role) {
+  try { return localStorage.getItem('bc_' + role + '_name') || ''; } catch(e) { return ''; }
+}
+
+function confirmName() {
+  const input = document.getElementById('modal-name-input');
+  const name = input.value.trim();
+  if (!name) {
+    input.style.borderColor = '#dc2626';
+    input.focus();
+    setTimeout(() => { input.style.borderColor = ''; }, 1200);
+    return;
+  }
+
+  // Save name + role to localStorage
+  try {
+    localStorage.setItem('bc_' + pendingRole + '_name', name);
+    localStorage.setItem('bc_' + pendingRole + '_role_selected', pendingRole);
+  } catch(e) {}
+
+  // Navigate
+  const dest = pendingRole === 'sponsor' ? 'sponsor.html' : 'applicant.html';
+  window.location.href = dest;
+}
+
+// ── TYPEWRITER ──
+(function() {
+  const text = 'BackChannel.';
+  const el = document.getElementById('typed-text');
+  const cursor = document.getElementById('cursor');
+  let i = 0;
+  setTimeout(() => {
+    cursor.style.opacity = '1';
+    cursor.style.animation = 'blink 0.8s step-end 8, fadeOutCursor 0.4s 7s ease forwards';
+    function type() {
+      if (i <= text.length) { el.textContent = text.slice(0, i); i++; setTimeout(type, i === 1 ? 180 : 68 + Math.random() * 30); }
+    }
+    type();
+  }, 920);
+})();
+
+// ── 3D CARD TILT ──
+(function() {
+  const cards = document.querySelectorAll('.role-card');
+  const MAX_TILT = 6, MAX_LIFT = -4;
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width/2) / (rect.width/2);
+      const dy = (e.clientY - rect.top - rect.height/2) / (rect.height/2);
+      card.style.transform = `perspective(900px) rotateX(${-dy*MAX_TILT}deg) rotateY(${dx*MAX_TILT}deg) translateY(${MAX_LIFT}px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1), border-color 0.25s, background 0.25s, box-shadow 0.25s';
+      card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      setTimeout(() => { card.style.transition = ''; }, 500);
+    });
+    card.addEventListener('mouseenter', () => {
+      card.style.transition = 'transform 0.1s ease, border-color 0.25s, background 0.25s, box-shadow 0.25s';
+    });
+  });
+})();
+
+// ── STAGGER CARD ENTRANCE ──
+(function() {
+  const cards = document.querySelectorAll('.role-card');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 900 + i * 120);
+  });
+})();
+</script>
+</body>
+</html>
