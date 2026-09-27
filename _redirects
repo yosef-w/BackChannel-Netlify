@@ -1,0 +1,10 @@
+# Universal-link paths. When the app is installed, iOS intercepts these
+# before they ever reach the browser (see .well-known/apple-app-site-association).
+# When it ISN'T — or the link is opened on a laptop — the visitor lands here
+# instead of a 404: a page that says what the link was for and where to get
+# the app. 200 (rewrite), not 301, so the original URL (and its ?token=) stays
+# in the address bar for the page's script to read.
+/verify-email   /open.html   200
+/reset-password /open.html   200
+/job/*          /open.html   200
+/invite/*       /open.html   200

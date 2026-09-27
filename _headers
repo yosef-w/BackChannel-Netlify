@@ -1,0 +1,5 @@
+# Apple fetches this file directly (no redirects allowed) and requires a
+# JSON content type even though the file has no extension.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
