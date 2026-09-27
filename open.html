@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<!-- Apple's smart banner: shows "Open" if installed, "Get" if not. -->
+<meta name="apple-itunes-app" content="app-id=6762495044">
+<title>Open BackChannel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#0a0a0a; --paper:#fff; --body:#4a4a44; --muted:#6b6b64; --border:#e8e8e4; }
+html { -webkit-text-size-adjust: 100%; }
+body { font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; background:var(--paper); color:var(--ink);
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; -webkit-font-smoothing:antialiased; }
+main { width:100%; max-width:420px; text-align:center; }
+.mark { font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:28px; }
+h1 { font-family:'DM Serif Display','Times New Roman',serif; font-weight:400; font-size:32px; line-height:1.15; margin-bottom:12px; }
+p { font-weight:300; font-size:16px; line-height:1.55; color:var(--body); margin-bottom:28px; }
+.btn { display:block; width:100%; padding:16px; border-radius:999px; background:var(--ink); color:var(--paper);
+  font-weight:600; font-size:15.5px; text-decoration:none; }
+.sub { margin-top:18px; font-size:13px; color:var(--muted); margin-bottom:0; }
+.sub a { color:var(--ink); }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#f5f5f2; --paper:#0a0a0a; --body:#c8c8c0; --muted:#8a8a82; --border:#26261f; }
+  .btn { background:var(--ink); color:var(--paper); }
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="mark">BackChannel</div>
+  <h1 id="title">Open this in the BackChannel app.</h1>
+  <p id="body">This link is meant for the app. If you have it installed it should have opened automatically — otherwise, get it from the App Store.</p>
+  <a class="btn" id="cta" href="https://apps.apple.com/app/id6762495044">Get BackChannel</a>
+  <p class="sub" id="sub">Already installed? <a id="openApp" href="backchannelv2://">Open the app</a></p>
+</main>
+<script>
+// Tailor the copy to what the link was for. The path and token were already
+// in the URL (Netlify rewrote it here with a 200, not a redirect), so the
+// hand-off to the app's custom scheme keeps the same path + query.
+(function () {
+  var path = location.pathname.replace(/\/+$/, "");
+  var copy = {
+    "/verify-email": ["Confirm your email in the app.", "Open BackChannel on the phone you signed up with to finish verifying your email."],
+    "/reset-password": ["Reset your password in the app.", "Open BackChannel on your phone to choose a new password. This link works from the phone that has the app installed."]
+  }[path];
+  if (copy) {
+    document.getElementById("title").textContent = copy[0];
+    document.getElementById("body").textContent = copy[1];
+  }
+  // backchannelv2://verify-email?token=…  — the same route the app already
+  // handles from the old custom-scheme email links.
+  var target = "backchannelv2://" + path.replace(/^\//, "") + location.search;
+  document.getElementById("openApp").setAttribute("href", target);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["ZWFR8LC25W.com.yosefwolday.backchannelv2"],
+        "components": [
+          { "/": "/verify-email", "comment": "Email verification + work-email verification + email change" },
+          { "/": "/reset-password", "comment": "Password reset" },
+          { "/": "/job/*", "comment": "Shared job links (invite loop)" },
+          { "/": "/invite/*", "comment": "Invite links (invite loop)" }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["ZWFR8LC25W.com.yosefwolday.backchannelv2"]
+  }
+}
